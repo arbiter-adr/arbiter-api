@@ -4,7 +4,7 @@ var settings = require('../../settings');
 var IPFS = require('ipfs')
 var ipfsNode = new IPFS()
 
-console.log(ipfsNode);
+// console.log(ipfsNode);
 
 // ipfsNode.isOnline((error, result) => {
 //   console.log(error);
@@ -13,15 +13,17 @@ console.log(ipfsNode);
 
 exports.addDocument = (doc) => {
   return new Promise((resolve, reject) => {
-    fs.readFileAsync(settings.dirname+'/contracts/solidity/Dispute.sol', 'utf8').then((doc) => {
-      return ipfsNode.files.add(new Buffer(doc));
-    }).then((result) => {
-      // var file = .path;
-      console.log(result[0]);
-      ipfsNode._repo.datastore.get(result[0].path, (error, _file) => {
-        if(error){reject(error)}
-        resolve(_file);
-      });
+    console.log(doc);
+    doc = new Buffer(doc); // do we need this?
+    ipfsNode.files.add(doc).then((result) => {
+      // did we get a hash for it?
+      resolve(result);
+
+      // console.log(result[0]);
+      // ipfsNode._repo.datastore.get(result[0].path, (error, _file) => {
+      //   if(error){reject(error)}
+      //   resolve(_file);
+      // });
     }).catch((error) => {
       reject(error);
     });

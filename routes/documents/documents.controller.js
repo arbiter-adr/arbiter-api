@@ -2,7 +2,10 @@ var utils = require('./documents.utils');
 
 
 exports.addDocument = (req, res, next) => {
-    utils.addDocument(req.body).then((data) => {
+    console.log(req);
+    res.send(req.files);
+
+    utils.addDocument(req.body.doc).then((data) => {
       res.status(200).send(data);
     }).catch((error) => {
       var err = new Error();
